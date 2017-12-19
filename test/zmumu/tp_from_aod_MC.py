@@ -32,6 +32,11 @@ elif "CMSSW_9_2_" in os.environ['CMSSW_VERSION']:
     process.source.fileNames = [
         '/store/relval/CMSSW_9_2_0/RelValZMM_13/GEN-SIM-RECO/PU25ns_91X_mcRun2_asymptotic_v3-v1/10000/0471AF1A-F53C-E711-A012-0CC47A7C345E.root'
     ] 
+elif "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
+    process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
+    process.source.fileNames = [
+        '/store/relval/CMSSW_9_4_0/RelValZMM_13/GEN-SIM-RECO/PU25ns_94X_mc2017_realistic_v10-v1/10000/2EA4F2FE-7DCA-E711-8BF9-0CC47A7C3638.root'
+    ] 
 else: raise RuntimeError, "Unknown CMSSW version %s" % os.environ['CMSSW_VERSION']
 
 ## SELECT WHAT DATASET YOU'RE RUNNING ON
