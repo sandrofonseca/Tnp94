@@ -169,6 +169,7 @@ MuonIDFlags = cms.PSet(
                         " innerTrack.hitPattern.numberOfValidPixelHits > 0 && " +
                         " abs(track.ptError / pt) < 0.10 )"),
     MuIDForOutsideInTk = cms.string("isStandAloneMuon && outerTrack.pt > 10 && outerTrack.hitPattern.muonStationsWithValidHits() >= 2"),
+    SelectorTight2016   = cms.string("CutBasedIdTight == 1")
 )
 
 HighPtTriggerFlags = cms.PSet(
