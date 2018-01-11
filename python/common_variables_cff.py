@@ -50,6 +50,7 @@ MuonIDVariables = cms.PSet(
     numberOfMatches   = cms.string("? isMatchesValid ? numberOfMatches : -1"),
     numberOfMatchedStations = cms.string("? isMatchesValid ? numberOfMatchedStations : -1"),
     segmentCompatibility = cms.string("segmentCompatibility"),
+
 )
 MuonCaloVariables = cms.PSet(
     hadEnergy   = cms.string("calEnergy.had"),
@@ -169,7 +170,29 @@ MuonIDFlags = cms.PSet(
                         " innerTrack.hitPattern.numberOfValidPixelHits > 0 && " +
                         " abs(track.ptError / pt) < 0.10 )"),
     MuIDForOutsideInTk = cms.string("isStandAloneMuon && outerTrack.pt > 10 && outerTrack.hitPattern.muonStationsWithValidHits() >= 2"),
-    SelectorTight2016   = cms.string("CutBasedIdTight == 1")
+    #SelectorTight2016  = cms.string("passed(8)")
+    CutBasedIdLoose        = cms.string("passed(1)"),
+    CutBasedIdMedium       = cms.string("passed(2)"),
+    CutBasedIdMediumPrompt = cms.string("passed(4)"),
+    CutBasedIdTight        = cms.string("passed(8)"),
+    CutBasedIdGlobalHighPt = cms.string("passed(16)"),
+    CutBasedIdTrkHighPt    = cms.string("passed(32)"),
+    PFIsoVeryLoose         = cms.string("passed(64)"),
+    PFIsoLoose             = cms.string("passed(128)"),
+    PFIsoMedium            = cms.string("passed(256)"),
+    PFIsoTight             = cms.string("passed(512)"),
+    PFIsoVeryTight         = cms.string("passed(1024)"),
+    TkIsoLoose             = cms.string("passed(2048)"),
+    TkIsoTight             = cms.string("passed(4096)"),
+    SoftCutBasedId         = cms.string("passed(8192)"),
+    SoftMvaId              = cms.string("passed(16384)"),# <--- From here and below: all selectors are broken (have 0 values only)
+    MvaLoose               = cms.string("passed(32768)"),
+    MvaMedium              = cms.string("passed(65536)"),
+    MvaTight               = cms.string("passed(131072)"),
+    MiniIsoLoose           = cms.string("passed(262144)"),
+    MiniIsoMedium          = cms.string("passed(524288)"),
+    MiniIsoTight           = cms.string("passed(1048576)"),
+    MiniIsoVeryTight       = cms.string("passed(2097152)")
 )
 
 HighPtTriggerFlags = cms.PSet(
