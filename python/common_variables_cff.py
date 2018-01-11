@@ -170,7 +170,8 @@ MuonIDFlags = cms.PSet(
                         " innerTrack.hitPattern.numberOfValidPixelHits > 0 && " +
                         " abs(track.ptError / pt) < 0.10 )"),
     MuIDForOutsideInTk = cms.string("isStandAloneMuon && outerTrack.pt > 10 && outerTrack.hitPattern.muonStationsWithValidHits() >= 2"),
-    #SelectorTight2016  = cms.string("passed(8)")
+    #Interger below correspond to bitmap defined in 
+    #https://github.com/cms-sw/cmssw/blob/CMSSW_9_4_X/DataFormats/MuonReco/interface/Muon.h#L188
     CutBasedIdLoose        = cms.string("passed(1)"),
     CutBasedIdMedium       = cms.string("passed(2)"),
     CutBasedIdMediumPrompt = cms.string("passed(4)"),
