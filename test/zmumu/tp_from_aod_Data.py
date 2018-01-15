@@ -81,6 +81,23 @@ elif "CMSSW_9_2_"in os.environ['CMSSW_VERSION']:
     process.source.fileNames = [
         '/store/express/Run2017B/ExpressPhysics/FEVT/Express-v1/000/297/101/00000/0C01D9CD-D253-E711-9D2F-02163E013511.root'
     ]  
+elif "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
+    process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
+
+    process.source.fileNames = [
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/0001B172-B9D8-E711-9771-34E6D7E05F1B.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/000D8EBA-DDD8-E711-9CC1-90E2BACBAA90.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/00187E27-4AD7-E711-B889-0CC47AD98D08.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/0063F440-69D8-E711-B1AB-0CC47A1E0DBC.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/0069F8CB-60D8-E711-BC59-002590E7D7D0.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/00B5B771-28D8-E711-8BFF-FA163ED9E97A.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/00E5B76F-DBD8-E711-B65D-02163E013935.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/00FFF78E-03D8-E711-8B50-FA163EB4E1E2.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/02306463-3FD8-E711-A33F-0025904C7DF8.root',
+            '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/02A63A34-09D8-E711-B377-1866DA879ED8.root'
+            
+            
+    ] 
 else: raise RuntimeError, "Unknown CMSSW version %s" % os.environ['CMSSW_VERSION']
 
 ## SELECT WHAT DATASET YOU'RE RUNNING ON
@@ -620,8 +637,8 @@ process.fakeRateZPlusProbe = cms.Path(
 
 process.schedule = cms.Schedule(
    process.tagAndProbe, 
-   process.tagAndProbeSta, 
-   process.tagAndProbeTkL1
+#   process.tagAndProbeSta, 
+#   process.tagAndProbeTkL1
 )
 
 process.RandomNumberGeneratorService.tkTracksNoZ = cms.PSet( initialSeed = cms.untracked.uint32(81) )
