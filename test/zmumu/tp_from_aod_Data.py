@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 10
 process.source = cms.Source("PoolSource", 
     fileNames = cms.untracked.vstring(),
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
@@ -121,9 +121,10 @@ process.load("HLTrigger.HLTfilters.triggerResultsFilter_cfi")
 
 
 if TRIGGER == "SingleMu":
-    process.triggerResultsFilter.triggerConditions = cms.vstring( 'HLT_Mu45_eta2p1_v*', 'HLT_Mu50_v*',
-                                                                  'HLT_IsoMu27_v*',   'HLT_IsoMu24_v*',   'HLT_IsoMu22_v*',   'HLT_IsoMu20_v*',
-                                                                  'HLT_IsoTkMu27_v*', 'HLT_IsoTkMu24_v*', 'HLT_IsoTkMu22_v*', 'HLT_IsoTkMu20_v*'  )
+#    process.triggerResultsFilter.triggerConditions = cms.vstring( 'HLT_Mu45_eta2p1_v*', 'HLT_Mu50_v*',
+#                                                                  'HLT_IsoMu27_v*',   'HLT_IsoMu24_v*',   'HLT_IsoMu22_v*',   'HLT_IsoMu20_v*',
+#                                                                  'HLT_IsoTkMu27_v*', 'HLT_IsoTkMu24_v*', 'HLT_IsoTkMu22_v*', 'HLT_IsoTkMu20_v*'  )
+    process.triggerResultsFilter.triggerConditions = cms.vstring( 'HLT_Mu50_v*','HLT_IsoMu27_v*', 'HLT_IsoMu24_v*','HLT_IsoMu20_v*')
 elif TRIGGER == "DoubleMu":
     process.triggerResultsFilter.triggerConditions = cms.vstring( 'HLT_Mu8_v*', 'HLT_Mu17_v*',
                                                                   'HLT_Mu8_TrkIsoVVL_v*', 'HLT_Mu17_TrkIsoVVL_v*',
@@ -637,8 +638,8 @@ process.fakeRateZPlusProbe = cms.Path(
 
 process.schedule = cms.Schedule(
    process.tagAndProbe, 
-#   process.tagAndProbeSta, 
-#   process.tagAndProbeTkL1
+   process.tagAndProbeSta, 
+   process.tagAndProbeTkL1
 )
 
 process.RandomNumberGeneratorService.tkTracksNoZ = cms.PSet( initialSeed = cms.untracked.uint32(81) )
