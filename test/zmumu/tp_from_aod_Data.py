@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 10
 process.source = cms.Source("PoolSource", 
     fileNames = cms.untracked.vstring(),
 )
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
@@ -249,18 +249,6 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
        HighPtTriggerFlagsDebug,
     ),
     tagVariables = cms.PSet(
-     #   TriggerVariables, 
-     #   MVAIsoVariablesPlainTag, 
-     #   pt = cms.string("pt"),
-     #   eta = cms.string("eta"),
-     #   phi = cms.string("phi"),
-     #   combRelIso = cms.string("(isolationR03.emEt + isolationR03.hadEt + isolationR03.sumPt)/pt"),
-     #   chargedHadIso04 = cms.string("pfIsolationR04().sumChargedHadronPt"),
-     #   neutralHadIso04 = cms.string("pfIsolationR04().sumNeutralHadronEt"),
-     #   photonIso04 = cms.string("pfIsolationR04().sumPhotonEt"),
-     #   combRelIsoPF04dBeta = IsolationVariables.combRelIsoPF04dBeta,
-     #   combRelIsoPF03dBeta = IsolationVariables.combRelIsoPF03dBeta,
-     #   dzPV = cms.InputTag("muonDxyPVdzminTags","dzPV"),
         AllVariables,
         ExtraIsolationVariables,
         nVertices   = cms.InputTag("nverticesModule"),
@@ -272,8 +260,6 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         nSplitTk  = cms.InputTag("splitTrackTagger"),
         l1rate = cms.InputTag("l1rate"),
         bx     = cms.InputTag("l1rate","bx"),
-        #mu17ps = cms.InputTag("l1hltprescale","HLTMu17TotalPrescale"), 
-        #mu8ps  = cms.InputTag("l1hltprescale","HLTMu8TotalPrescale"), 
         instLumi = cms.InputTag("addEventInfo", "instLumi"),
         met = cms.InputTag("tagMetMt","met"),
         mt  = cms.InputTag("tagMetMt","mt"),
@@ -638,7 +624,7 @@ process.fakeRateZPlusProbe = cms.Path(
 
 process.schedule = cms.Schedule(
    process.tagAndProbe, 
-   process.tagAndProbeSta, 
+   #process.tagAndProbeSta, 
    process.tagAndProbeTkL1
 )
 
