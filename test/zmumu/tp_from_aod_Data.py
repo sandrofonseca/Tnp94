@@ -189,6 +189,7 @@ process.pseudoTag = cms.EDFilter("MuonSelector",
     cut = cms.string("pt > 15 && isGlobalMuon && numberOfMatchedStations >= 2 && pfIsolationR04().sumChargedHadronPt/pt < 0.2")
 )
 if TRIGGER == "DoubleMu":
+    #line below means that the muon is loose
     process.tagMuons.cut = ("pt > 6 && (isGlobalMuon || isTrackerMuon) && isPFMuon "+
                             " && !triggerObjectMatchesByCollection('hltL3MuonCandidates').empty()"+
                             " && pfIsolationR04().sumChargedHadronPt/pt < 0.2")
