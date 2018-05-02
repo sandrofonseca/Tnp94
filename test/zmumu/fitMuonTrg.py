@@ -55,8 +55,9 @@ def FillNumDen(num, den):
     #DEN
     if den == "looseidniso":
         #process.TnP_MuonID.Categories.LooseIDandLooseIso= cms.vstring("Loose ID and ISO Muon", "dummy[pass=1,fail=0]")
-        process.TnP_MuonID.Categories.PF  = cms.vstring("PF Muon", "dummy[pass=1,fail=0]")
-        process.TnP_MuonID.Variables.combRelIsoPF04dBeta = cms.vstring("dBeta rel iso dR 0.4", "-2", "9999999", "")
+        #process.TnP_MuonID.Categories.PF  = cms.vstring("PF Muon", "dummy[pass=1,fail=0]")
+        process.TnP_MuonID.Categories.CutBasedIdLoose  = cms.vstring("PassLooseid", "dummy[pass=1,fail=0]")
+        process.TnP_MuonID.Categories.PFIsoLoose  = cms.vstring("PassLooseiso", "dummy[pass=1,fail=0]")
     elif den == "tightidniso":
         process.TnP_MuonID.Variables.dzPV  = cms.vstring("dzPV", "-1000", "1000", "")
         process.TnP_MuonID.Categories.Tight2012 = cms.vstring("Tight Id. Muon", "dummy[pass=1,fail=0]")
@@ -89,7 +90,6 @@ def FillVariables(par):
     if par == 'pt_eta' or 'newpt_eta':
         process.TnP_MuonID.Variables.abseta  = cms.vstring("muon |#eta|", "0", "2.5", "")
     if par == 'vtx':
-        print 'I filled it'
         process.TnP_MuonID.Variables.tag_nVertices   = cms.vstring("Number of vertices", "0", "999", "")
 
 def FillBin(par):
@@ -98,35 +98,14 @@ def FillBin(par):
     if par == 'newpt_eta':
         DEN.pair_newTuneP_probe_pt = cms.vdouble(20, 25, 30, 40, 50, 55, 60, 120) 
         DEN.abseta = cms.vdouble( 0., 0.9, 1.2, 2.1, 2.4)
-    #elif par == 'newpt':
-    #    DEN.pair_newTuneP_probe_pt = cms.vdouble(21, 25, 30, 40, 50, 55, 60, 120, 200)
-    #elif par == 'newpt':
-    #    DEN.pair_newTuneP_probe_pt = cms.vdouble(21, 25, 30, 40, 50, 55, 60, 100, 200)
     elif par == 'newpt':
         DEN.pair_newTuneP_probe_pt = cms.vdouble(21, 25, 30, 40, 50, 55, 60, 90, 200)
-    #elif par == 'newpt':
-    #    DEN.pair_newTuneP_probe_pt = cms.vdouble(21, 25, 30, 40, 50, 55, 60, 80, 200)
-    #elif par == 'newpt':
-    #    DEN.pair_newTuneP_probe_pt = cms.vdouble(21, 25, 30, 40, 50, 55, 60, 75, 90, 200)
-    #elif par == 'newpt':
-    #    DEN.pair_newTuneP_probe_pt = cms.vdouble(21, 25, 30, 40, 50, 55, 60, 70, 90, 200)
     elif par == 'eta':
         DEN.eta = cms.vdouble(-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4)
-    #elif par == 'pt':
-    #    DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 120, 200)
-    #elif par == 'pt':
-    #    DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 100, 200)
     elif par == 'pt':
         DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 90, 200)
-    #elif par == 'pt':
-    #    DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 80, 200)
-    #elif par == 'pt':
-    #    DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 75, 90, 200)
-    #elif par == 'pt':
-    #    DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 70, 90, 200)
     elif par == 'pt_eta':
         DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 120)
-        #DEN.pt = cms.vdouble(20, 25, 30, 40, 50, 60, 80, 100, 120)
         DEN.abseta = cms.vdouble( 0., 0.9, 1.2, 2.1, 2.4)
     elif par == 'vtx':
         DEN.tag_nVertices = cms.vdouble(0.5,2.5,4.5,6.5,8.5,10.5,12.5,14.5,16.5,18.5,20.5,22.5,24.5,26.5,28.5,30.5,32.5,34.5,36.5,38.5,40.5,42.5,44.5,46.5,48.5,50.5)
@@ -145,11 +124,9 @@ def FillBin(par):
         DEN.tag_DoubleIsoMu17TkMu8_IsoMu17leg= cms.vstring("pass")
     if den == "gentrack": pass
     elif den == "looseidniso": 
-        #DEN.LooseIDandLooseIso= cms.vstring("pass")
-        DEN.PF = cms.vstring("pass")
-        DEN.combRelIsoPF04dBeta= cms.vdouble(0, 0.25)
+        DEN.CutBasedIdLoose = cms.vstring("pass")
+        DEN.PFIsoLoose= cms.vstring("pass")
     elif den == "tightidniso": 
-        #DEN.Tight2012andTightIso= cms.vstring("pass")
         DEN.Tight2012 = cms.vstring("pass")
         DEN.dzPV = cms.vdouble(-0.5, 0.5)
         DEN.combRelIsoPF04dBeta= cms.vdouble(0, 0.15)
@@ -171,6 +148,7 @@ print "Will run scenario ", scenario
 sample = 'data'
 if len(args) > 5: sample = args[5]
 print 'The sample is', sample
+par = 'pt_eta'
 if len(args) > 6: par = args[6]
 print 'The binning is', par 
 bgFitFunction = 'default'
@@ -294,28 +272,38 @@ Template = cms.EDAnalyzer("TagProbeFitTreeAnalyzer",
     Efficiencies = cms.PSet(), # will be filled later
 )
 
-if sample == "data_MoriondBCDEFG":
-    process.TnP_MuonID = Template.clone(
-        InputFileNames = cms.vstring(
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016B_GoldenJSON_Run276098to276384.root',
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016C_GoldenJSON_Run276098to276384.root', 
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016D_GoldenJSON_Run276098to276384.root', 
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016E_GoldenJSON_Run276098to276384.root',
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016F_GoldenJSON_Run276098to276384.root',
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016G_GoldenJSON_Run278819to280384.root' 
-            ),
-        InputTreeName = cms.string("fitter_tree"),
-        InputDirectoryName = cms.string("tpTree"),
-        OutputFileName = cms.string("TnP_MuonID_%s.root" % scenario),
-        Efficiencies = cms.PSet(),
-        )
+#if sample == "data_MoriondBCDEFG":
+#    process.TnP_MuonID = Template.clone(
+#        InputFileNames = cms.vstring(
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016B_GoldenJSON_Run276098to276384.root',
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016C_GoldenJSON_Run276098to276384.root', 
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016D_GoldenJSON_Run276098to276384.root', 
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016E_GoldenJSON_Run276098to276384.root',
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016F_GoldenJSON_Run276098to276384.root',
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016G_GoldenJSON_Run278819to280384.root' 
+#            ),
+#        InputTreeName = cms.string("fitter_tree"),
+#        InputDirectoryName = cms.string("tpTree"),
+#        OutputFileName = cms.string("TnP_MuonID_%s.root" % scenario),
+#        Efficiencies = cms.PSet(),
+#        )
+#
+#if sample == "data_MoriondH":
+#    process.TnP_MuonID = Template.clone(
+#        InputFileNames = cms.vstring(
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016H_v2_GoldenJSON_Run281613to284035.root',
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016H_GoldenJSON_Run284036to284044.root'
+#            ),
+#        InputTreeName = cms.string("fitter_tree"),
+#        InputDirectoryName = cms.string("tpTree"),
+#        OutputFileName = cms.string("TnP_MuonID_%s.root" % scenario),
+#        Efficiencies = cms.PSet(),
+#        )
 
-if sample == "data_MoriondH":
+if sample == "data_2017":
     process.TnP_MuonID = Template.clone(
-        InputFileNames = cms.vstring(
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016H_v2_GoldenJSON_Run281613to284035.root',
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/Data/TnPTree_80XRereco_Run2016H_GoldenJSON_Run284036to284044.root'
-            ),
+        #InputFileNames = cms.vstring('root://eoscms//eos/cms/store/group/phys_muon/TagAndProbe/Run2017/94X/RunB/TnPTree_17Nov2017_SingleMuon_Run2017Bv1_Full_GoldenJSON.root'),
+        InputFileNames = cms.vstring('/afs/cern.ch/work/g/gaperrin/private/TnP/TnP_Muon/TNP_WORKING_RECIPE_27_04_18/CMSSW_9_4_0_pre3/src/MuonAnalysis/TagAndProbe/test/zmumu/macros/skimmed.root'),
         InputTreeName = cms.string("fitter_tree"),
         InputDirectoryName = cms.string("tpTree"),
         OutputFileName = cms.string("TnP_MuonID_%s.root" % scenario),
@@ -333,16 +321,16 @@ if sample == "data_MoriondH":
 #        Efficiencies = cms.PSet(),
 #        )
 #
-if sample == "mc_MoriondBCDEFG" or sample == "mc_MoriondH":
-    process.TnP_MuonID = Template.clone(
-        InputFileNames = cms.vstring(
-            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/MC/MC_Moriond17_DY_tranch4Premix_part1to11_wBCDEFG_wH.root'
-            ),
-        InputTreeName = cms.string("fitter_tree"),
-        InputDirectoryName = cms.string("tpTree"),
-        OutputFileName = cms.string("TnP_MuonID_%s.root" % scenario),
-        Efficiencies = cms.PSet(),
-        )
+#if sample == "mc_MoriondBCDEFG" or sample == "mc_MoriondH":
+#    process.TnP_MuonID = Template.clone(
+#        InputFileNames = cms.vstring(
+#            'root://eoscms//eos/cms/store/group/phys_muon/perrin/Ntuple_for_doubletrigg2017/Central_Ntuples_skimmed/MC/MC_Moriond17_DY_tranch4Premix_part1to11_wBCDEFG_wH.root'
+#            ),
+#        InputTreeName = cms.string("fitter_tree"),
+#        InputDirectoryName = cms.string("tpTree"),
+#        OutputFileName = cms.string("TnP_MuonID_%s.root" % scenario),
+#        Efficiencies = cms.PSet(),
+#        )
 
 weightvar = ''
 if sample == "mc_MoriondBCDEFG": weightvar = "weightBCDEFG"
@@ -463,10 +451,8 @@ for ID, ALLBINS in ID_BINS:
                 BinnedVariables = DEN,
                 BinToPDFmap = shape
                 ))
-            print 'yeah'
         setattr(process, "TnP_MuonID_"+ID+"_"+X, module)
         setattr(process, "run_"+ID+"_"+X, cms.Path(module))
-        print 'yeah baby'
     elif scenario == 'mc_all' and not par == 'vtx':
         if num_.find("Iso4") != -1 or num_.find("Iso3") != -1:
             setattr(module.Efficiencies, ID+"_"+X, cms.PSet(
