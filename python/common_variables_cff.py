@@ -287,8 +287,8 @@ HighPtTriggerFlags = cms.PSet(
 
 
    # 2017 no-prescale double muon DZ with mass cut
-   DoubleIsoMu17Mu8dZ_Mass3p8 = cms.string("!triggerObjectMatchesByPath('HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v*',1,0).empty()"),
-   DoubleIsoMu17Mu8dZ_Mass8 = cms.string("!triggerObjectMatchesByPath('HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v*',1,0).empty()"),
+   DoubleIsoMu17Mu8dZMass3p8_Mu17leg = cms.string("!triggerObjectMatchesByPath('HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v*',1,0).empty() && !triggerObjectMatchesByFilter('hltL3fL1DoubleMu155fFiltered17').empty()"),
+   DoubleIsoMu17Mu8dZMass8_Mu17leg = cms.string("!triggerObjectMatchesByPath('HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v*',1,0).empty() && !triggerObjectMatchesByFilter('hltL3fL1DoubleMu155fFiltered17').empty()"),
 
    #monitoring of the Mu30TkMu11 path
    DoubleMu30TkMu11 = cms.string("!triggerObjectMatchesByPath('HLT_Mu30_TkMu11_v*',1,0).empty()"),
