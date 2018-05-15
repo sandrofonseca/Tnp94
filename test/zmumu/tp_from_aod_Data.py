@@ -13,6 +13,7 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(),
 )
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(500) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2000) )
 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
@@ -77,37 +78,52 @@ if TRIGGER == "SingleMu":
                 '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/02306463-3FD8-E711-A33F-0025904C7DF8.root',
                 '/store/data/Run2017B/SingleMuon/AOD/17Nov2017-v1/40000/02A63A34-09D8-E711-B377-1866DA879ED8.root'
         ] 
-#elif TRIGGER == "DoubleMu":
-#    if "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
-#        process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
-#        process.source.fileNames = [
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/001137DB-26D6-E711-8E99-02163E014465.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/00257FFD-75D6-E711-AF36-02163E00C237.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/004FAB33-EDD7-E711-9285-0CC47AF9B2C2.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/00A4FF50-50D6-E711-8041-3417EBE64696.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/0213E51B-70D6-E711-B6D2-FA163EB59DE8.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/024AA85D-61D6-E711-A3A7-00266CFFBED8.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/029AF1A0-70D6-E711-9ACE-FA163E13FDEA.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/047B71B3-EAD7-E711-8494-0025905C53B0.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/04C6F7D0-6BD6-E711-87D5-02163E00BCDE.root',
-#                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/04EE1B23-50D6-E711-9F69-7845C4FC36E6.root'
-#        ] 
-
 elif TRIGGER == "DoubleMu":
     if "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
         process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
         process.source.fileNames = [
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/00D8AF75-BED2-E711-93B6-FA163EB99C87.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/00F99E58-ADD2-E711-8381-02163E00B414.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/022D7A7E-A5D5-E711-9158-001E6779284A.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/065EAC85-ADD2-E711-8063-FA163E2C9D20.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/067D92F3-B7D2-E711-AC86-02163E01769A.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/08A8F36E-AED2-E711-A604-FA163EC0AF06.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/08D0F680-B7D2-E711-8843-484D7E8DF0AC.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/0AA82F7C-AED2-E711-B846-FA163E6D9159.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/0AC7C23B-D3D2-E711-8C60-002590E7E00A.root',
-                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/0AEF4E20-A9D2-E711-A91C-002481DE49B6.root'
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/001137DB-26D6-E711-8E99-02163E014465.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/00257FFD-75D6-E711-AF36-02163E00C237.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/004FAB33-EDD7-E711-9285-0CC47AF9B2C2.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/00A4FF50-50D6-E711-8041-3417EBE64696.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/0213E51B-70D6-E711-B6D2-FA163EB59DE8.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/024AA85D-61D6-E711-A3A7-00266CFFBED8.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/029AF1A0-70D6-E711-9ACE-FA163E13FDEA.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/047B71B3-EAD7-E711-8494-0025905C53B0.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/04C6F7D0-6BD6-E711-87D5-02163E00BCDE.root',
+                '/store/data/Run2017B/DoubleMuon/AOD/17Nov2017-v1/30000/04EE1B23-50D6-E711-9F69-7845C4FC36E6.root'
         ] 
+
+#elif TRIGGER == "DoubleMu":
+#    if "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
+#        process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
+#        process.source.fileNames = [
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/00D8AF75-BED2-E711-93B6-FA163EB99C87.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/00F99E58-ADD2-E711-8381-02163E00B414.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/022D7A7E-A5D5-E711-9158-001E6779284A.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/065EAC85-ADD2-E711-8063-FA163E2C9D20.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/067D92F3-B7D2-E711-AC86-02163E01769A.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/08A8F36E-AED2-E711-A604-FA163EC0AF06.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/08D0F680-B7D2-E711-8843-484D7E8DF0AC.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/0AA82F7C-AED2-E711-B846-FA163E6D9159.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/0AC7C23B-D3D2-E711-8C60-002590E7E00A.root',
+#                '/store/data/Run2017C/DoubleMuon/AOD/17Nov2017-v1/20000/0AEF4E20-A9D2-E711-A91C-002481DE49B6.root'
+#        ] 
+
+#elif TRIGGER == "DoubleMu":
+#    if "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
+#        process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
+#        process.source.fileNames = ['/store/data/Run2017D/DoubleMuon/AOD/17Nov2017-v1/20000/0074BBA6-D3D5-E711-8772-A4BF01125848.root'] 
+#
+#elif TRIGGER == "DoubleMu":
+#    if "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
+#        process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
+#        process.source.fileNames = ['/store/data/Run2017E/DoubleMuon/AOD/17Nov2017-v1/20000/007A4914-57D3-E711-AD6E-5065F3819241.root'] 
+
+#elif TRIGGER == "DoubleMu":
+#    if "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
+#        process.GlobalTag.globaltag = cms.string('91X_mcRun2_asymptotic_v3')
+#        process.source.fileNames = ['/store/data/Run2017F/DoubleMuon/AOD/17Nov2017-v1/50000/001819FE-49DE-E711-A6AA-001E67792606.root'] 
 
 else: raise RuntimeError, "Unknown CMSSW version %s" % os.environ['CMSSW_VERSION']
 
@@ -637,7 +653,7 @@ process.fakeRateZPlusProbe = cms.Path(
 process.schedule = cms.Schedule(
    process.tagAndProbe, 
    #process.tagAndProbeSta, 
-   process.tagAndProbeTkL1
+   #process.tagAndProbeTkL1
 )
 
 process.RandomNumberGeneratorService.tkTracksNoZ = cms.PSet( initialSeed = cms.untracked.uint32(81) )
