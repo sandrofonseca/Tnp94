@@ -10,13 +10,13 @@ from JetMETCorrections.Configuration.JetCorrectors_cff import ak4PFCHSL3Absolute
 
 nverticesModule = cms.EDProducer("VertexMultiplicityCounter", 
     probes = cms.InputTag("tagMuons"),
-    objects = cms.InputTag("offlinePrimaryVertices"),
+    objects = cms.InputTag("offlineSlimmedPrimaryVertices"),
     objectSelection = cms.string("!isFake && ndof > 4 && abs(z) <= 25 && position.Rho <= 2"),
 )
 
 njets30Module = cms.EDProducer("CandCleanedMultiplicityCounter", 
     pairs   = cms.InputTag("tpPairs"),
-    objects = cms.InputTag("ak4PFJetsCHS"),
+    objects = cms.InputTag("slimmedJets"),
     objectSelection = cms.string("abs(eta) < 5 && pt > 30"), 
     minTagObjDR   = cms.double(0.3),
     minProbeObjDR = cms.double(0.3),
@@ -158,7 +158,7 @@ muonMiniIsoPhotons = cms.EDProducer("MuonMiniIso",
 
 muonDxyPVdzmin = cms.EDProducer("MuonDxyPVdzmin",
     probes = cms.InputTag("probeMuons"),
-    vertices = cms.InputTag("offlinePrimaryVertices"),
+    vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
 )
 muonDxyPVdzminTags = muonDxyPVdzmin.clone(probes = "tagMuons")
 
