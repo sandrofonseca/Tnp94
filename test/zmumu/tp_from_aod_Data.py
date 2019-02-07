@@ -241,6 +241,8 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         activity_miniIsoPhotons = cms.InputTag("muonMiniIsoPhotons","activity"),
         nSplitTk  = cms.InputTag("splitTrackTagger"),
         mt  = cms.InputTag("probeMetMt","mt"),
+        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPt","highPtIDNew"),
+
     ),
     flags = cms.PSet(
        TrackQualityFlags,
@@ -277,8 +279,12 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         instLumi = cms.InputTag("addEventInfo", "instLumi"),
         met = cms.InputTag("tagMetMt","met"),
         mt  = cms.InputTag("tagMetMt","mt"),
+        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPtTags","highPtIDNew"),
     ),
-    tagFlags = cms.PSet(HighPtTriggerFlags,HighPtTriggerFlagsDebug),
+    tagFlags = cms.PSet(
+        HighPtTriggerFlags,
+        HighPtTriggerFlagsDebug,
+        ),
     pairVariables = cms.PSet(
         nJets30 = cms.InputTag("njets30Module"),
         dz      = cms.string("daughter(0).vz - daughter(1).vz"),
@@ -347,6 +353,8 @@ process.tnpSimpleSequence = cms.Sequence(
     process.bestPairByZMass + 
     process.newTunePVals +
     process.muonDxyPVdzminTags +
+    process.muonHighPt + 
+    process.muonHighPtTags + 
     process.tpTree
 )
 

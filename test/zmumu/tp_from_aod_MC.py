@@ -176,12 +176,14 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         activity_miniIsoPhotons = cms.InputTag("muonMiniIsoPhotons","activity"), 
         nSplitTk  = cms.InputTag("splitTrackTagger"),
         mt  = cms.InputTag("probeMetMt","mt"),
+        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPt","highPtIDNew")
     ),
     flags = cms.PSet(
        TrackQualityFlags,
        MuonIDFlags,
        HighPtTriggerFlags,
        HighPtTriggerFlagsDebug,
+       
     ),
     tagVariables = cms.PSet(
      #   TriggerVariables, 
@@ -207,6 +209,7 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         nSplitTk  = cms.InputTag("splitTrackTagger"),
         met = cms.InputTag("tagMetMt","met"),
         mt  = cms.InputTag("tagMetMt","mt"),
+        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPtTags","highPtIDNew"),
     ),
     mcVariables = cms.PSet(
         pt = cms.string('pt'),
@@ -216,7 +219,10 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         ),
     mcFlags = cms.PSet(
         ),
-    tagFlags = cms.PSet(HighPtTriggerFlags,HighPtTriggerFlagsDebug),
+    tagFlags = cms.PSet(
+        HighPtTriggerFlags,
+        HighPtTriggerFlagsDebug,
+        ),
     pairVariables = cms.PSet(
         nJets30 = cms.InputTag("njets30Module"),
         dz      = cms.string("daughter(0).vz - daughter(1).vz"),
@@ -235,6 +241,8 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         newTuneP_probe_sigmaPtOverPt = cms.InputTag("newTunePVals", "ptRelError"),
         newTuneP_probe_trackType     = cms.InputTag("newTunePVals", "trackType"),
         newTuneP_mass                = cms.InputTag("newTunePVals", "mass"),
+        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPtTags","highPtIDNew"),
+
     ),
     pairFlags = cms.PSet(
         BestZ = cms.InputTag("bestPairByZMass"),
@@ -294,6 +302,8 @@ process.tnpSimpleSequence = cms.Sequence(
     process.newTunePVals +
     process.genAdditionalInfo +
     process.muonDxyPVdzminTags +
+    process.muonHighPt + 
+    process.muonHighPtTags + 
     process.tpTree
 )
 
