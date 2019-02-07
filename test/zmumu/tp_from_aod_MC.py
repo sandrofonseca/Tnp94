@@ -10,9 +10,9 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.source = cms.Source("PoolSource", 
     fileNames = cms.untracked.vstring(),
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10))
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100))
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100))
 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_38T_cff')
@@ -41,6 +41,12 @@ elif "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
         #'/store/relval/CMSSW_9_4_0/RelValZMM_13/GEN-SIM-RECO/PU25ns_94X_mc2017_realistic_v10-v1/10000/2EA4F2FE-7DCA-E711-8BF9-0CC47A7C3638.root'
         #'/store/relval/CMSSW_9_4_0_pre3/RelValZMM_13/MINIAODSIM/PU25ns_94X_mc2017_realistic_PixFailScenario_IDEAL_HS_AVE50-v1/10000/5228FC24-10C5-E711-9B90-E0071B73B6C0.root'
     ] 
+elif "CMSSW_10_2_" in os.environ['CMSSW_VERSION']:
+    process.GlobalTag.globaltag = cms.string('102X_upgrade2018_realistic_v15')
+    process.source.fileNames = [
+        '/store/mc/RunIIAutumn18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/102X_upgrade2018_realistic_v15-v1/100000/73EF8C73-4852-D044-867F-4CFA1F920AEE.root'
+    ] 
+    
 
 else: raise RuntimeError, "Unknown CMSSW version %s" % os.environ['CMSSW_VERSION']
 
@@ -202,6 +208,14 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         met = cms.InputTag("tagMetMt","met"),
         mt  = cms.InputTag("tagMetMt","mt"),
     ),
+    mcVariables = cms.PSet(
+        pt = cms.string('pt'),
+        phi = cms.string('phi'),
+        charge = cms.string('charge'),
+        eta = cms.string('eta'),
+        ),
+    mcFlags = cms.PSet(
+        ),
     tagFlags = cms.PSet(HighPtTriggerFlags,HighPtTriggerFlagsDebug),
     pairVariables = cms.PSet(
         nJets30 = cms.InputTag("njets30Module"),

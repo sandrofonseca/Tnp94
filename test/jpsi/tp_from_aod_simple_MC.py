@@ -10,7 +10,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.source = cms.Source("PoolSource", 
     fileNames = cms.untracked.vstring(),
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )    
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )    
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )    
 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
@@ -38,6 +38,12 @@ elif "CMSSW_9_4_" in os.environ['CMSSW_VERSION']:
     process.source.fileNames = [
         '/store/mc/RunIIFall17DRPremix/JpsiToMuMu_JpsiPt8_TuneCP5_13TeV-pythia8/AODSIM/RECOSIMstep_94X_mc2017_realistic_v10-v1/110000/02DF9450-B9FA-E711-90B5-FA163E24FAE3.root'
     ] 
+elif "CMSSW_10_2_" in os.environ['CMSSW_VERSION']:
+    process.GlobalTag.globaltag = cms.string('102X_upgrade2018_realistic_v15')
+    process.source.fileNames = [
+        '/store/mc/RunIIAutumn18DRPremix/JpsiToMuMu_JpsiPt8_TuneCP5_13TeV-pythia8/AODSIM/102X_upgrade2018_realistic_v15-v1/110000/8F21228F-F396-6941-BA4C-612611909CBA.root'
+    ] 
+
     
 else: raise RuntimeError, "Unknown CMSSW version %s" % os.environ['CMSSW_VERSION']
 
