@@ -30,6 +30,21 @@
 // class declaration
 //
 
+bool isHighPtMuon(const reco::Muon& muon, const reco::Vertex& vtx){
+  bool muID =   muon.isGlobalMuon() && muon.globalTrack()->hitPattern().numberOfValidMuonHits() > 0 && (muon.numberOfMatchedStations() > 1);
+  if(!muID) return false;
+ 
+  bool hits = muon.innerTrack()->hitPattern().trackerLayersWithMeasurement() > 5 &&
+    muon.innerTrack()->hitPattern().numberOfValidPixelHits() > 0; 
+ 
+  bool momQuality = muon.tunePMuonBestTrack()->ptError()/muon.tunePMuonBestTrack()->pt() < 0.3;
+ 
+  bool ip = fabs(muon.innerTrack()->dxy(vtx.position())) < 0.2 && fabs(muon.innerTrack()->dz(vtx.position())) < 0.5;
+   
+  return muID && hits && momQuality && ip;
+ 
+}
+
 
 bool isNewHighPtMuon(const reco::Muon& muon, const reco::Vertex& vtx){
   if(!muon.isGlobalMuon()) return false;
@@ -97,6 +112,7 @@ vertexes_(consumes<std::vector<reco::Vertex>>(edm::InputTag("offlinePrimaryVerti
 bs_(consumes<reco::BeamSpot>(edm::InputTag("offlineBeamSpot")))
 {
   produces<edm::ValueMap<float> >("highPtIDNew");
+  produces<edm::ValueMap<float> >("highPtID");
 
 }
 
@@ -124,60 +140,45 @@ MuonHighPt::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
   Handle<View<reco::Muon> > probes;
   iEvent.getByToken(probes_,  probes);
   
-  edm::Handle<std::vector<reco::Vertex> > vertex;
-  iEvent.getByToken(vertexes_, vertex);
-      
   edm::Handle<reco::BeamSpot> recoBeamSpotHandle;
   iEvent.getByToken(bs_,recoBeamSpotHandle);
 
   // prepare vector for output    
   std::vector<float> muon_highPtIDNew;
+  std::vector<float> muon_highPtID;
 
   // fill
   View<reco::Muon>::const_iterator probe, endprobes = probes->end();
 
 
-  // getting the good primary vertex
-  reco::Vertex::Point posVtx;
-  reco::Vertex::Error errVtx;
-  unsigned int theIndexOfThePrimaryVertex = 999.;
-  if (!vertex.isValid()) {
-    for (unsigned int ind=0; ind<vertex->size(); ++ind) {
-      if ( (*vertex)[ind].isValid() && !((*vertex)[ind].isFake()) ) {
-	theIndexOfThePrimaryVertex = ind;
-	break;
-      }
-    }
-  }
+  edm::Handle<std::vector<reco::Vertex> > primaryVertices;
+  const reco::Vertex* vertex(nullptr);
+  iEvent.getByToken(vertexes_, primaryVertices);
+  if (!primaryVertices->empty())
+    vertex = &(primaryVertices->front());
 
-  if (theIndexOfThePrimaryVertex<100) {
-    posVtx = ((*vertex)[theIndexOfThePrimaryVertex]).position();
-    errVtx = ((*vertex)[theIndexOfThePrimaryVertex]).error();
-  }   
-  else {
-    reco::BeamSpot bs = *recoBeamSpotHandle;
- 
-    posVtx = bs.position();
-    errVtx(0,0) = bs.BeamWidthX();
-    errVtx(1,1) = bs.BeamWidthY();
-    errVtx(2,2) = bs.sigmaZ();
-  }
-
-  const reco::Vertex thePrimaryVertex(posVtx,errVtx);
-
+  
 
   // loop on PROBES
   for (probe = probes->begin(); probe != endprobes; ++probe) {
-    muon_highPtIDNew.push_back( isNewHighPtMuon(*probe, thePrimaryVertex) ) ;
+    muon_highPtIDNew.push_back( isNewHighPtMuon(*probe, *vertex) ) ;
+    muon_highPtID   .push_back( isHighPtMuon(*probe, *vertex) ) ;
   }// end loop on probes
 
   // convert into ValueMap and store
   std::unique_ptr<ValueMap<float> > highPtIDNew(new ValueMap<float>());
+  std::unique_ptr<ValueMap<float> > highPtID(new ValueMap<float>());
+
   ValueMap<float>::Filler filler0(*highPtIDNew);
+  ValueMap<float>::Filler filler1(*highPtID);
+
   filler0.insert(probes, muon_highPtIDNew.begin(), muon_highPtIDNew.end());
+  filler1.insert(probes, muon_highPtID.begin(), muon_highPtID.end());
   filler0.fill();
+  filler1.fill();
 
   iEvent.put(std::move(highPtIDNew), "highPtIDNew");
+  iEvent.put(std::move(highPtID), "highPtID");
 
 
 }

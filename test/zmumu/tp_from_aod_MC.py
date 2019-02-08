@@ -176,7 +176,8 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         activity_miniIsoPhotons = cms.InputTag("muonMiniIsoPhotons","activity"), 
         nSplitTk  = cms.InputTag("splitTrackTagger"),
         mt  = cms.InputTag("probeMetMt","mt"),
-        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPt","highPtIDNew")
+        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPt","highPtIDNew"),
+        CutBasedIdGlobalHighPt_2 = cms.InputTag("muonHighPt","highPtID"),
     ),
     flags = cms.PSet(
        TrackQualityFlags,
@@ -210,6 +211,7 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         met = cms.InputTag("tagMetMt","met"),
         mt  = cms.InputTag("tagMetMt","mt"),
         CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPtTags","highPtIDNew"),
+        CutBasedIdGlobalHighPt_2 = cms.InputTag("muonHighPtTags","highPtID2"),
     ),
     mcVariables = cms.PSet(
         pt = cms.string('pt'),
@@ -241,8 +243,6 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
         newTuneP_probe_sigmaPtOverPt = cms.InputTag("newTunePVals", "ptRelError"),
         newTuneP_probe_trackType     = cms.InputTag("newTunePVals", "trackType"),
         newTuneP_mass                = cms.InputTag("newTunePVals", "mass"),
-        CutBasedIdGlobalHighPt_new = cms.InputTag("muonHighPtTags","highPtIDNew"),
-
     ),
     pairFlags = cms.PSet(
         BestZ = cms.InputTag("bestPairByZMass"),
