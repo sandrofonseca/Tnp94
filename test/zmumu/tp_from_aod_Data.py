@@ -330,6 +330,7 @@ process.extraProbeVariablesSeq = cms.Sequence(
     process.computeCorrectedIso + 
     process.splitTrackTagger +
     process.muonDxyPVdzmin + 
+    process.muonHighPt + 
     process.probeMetMt + process.tagMetMt +
     process.miniIsoSeq +
     # process.ak4PFCHSJetsL1L2L3 +
@@ -353,7 +354,6 @@ process.tnpSimpleSequence = cms.Sequence(
     process.bestPairByZMass + 
     process.newTunePVals +
     process.muonDxyPVdzminTags +
-    process.muonHighPt + 
     process.muonHighPtTags + 
     process.tpTree
 )
