@@ -213,23 +213,57 @@ process.probeMuons = cms.EDFilter("PATMuonSelector",
 )
 
 
+############################################
+#from PhysicsTools.PatAlgos.tools.coreTools import runOnData
+#runOnData( process )
+
+## load photon sequencesup to selectedPatPhotons
+process.load("PhysicsTools.PatAlgos.producersLayer1.photonProducer_cfi")
+# mc matching
+process.patPhotons.addGenMatch = cms.bool(False)
+process.patPhotons.embedGenMatch = cms.bool(False)
+
+
+process.load("PhysicsTools.PatAlgos.producersLayer1.photonProducer_cff")
+
+process.load("PhysicsTools.PatAlgos.selectionLayer1.photonSelector_cfi")
+
+process.photonSeq = cms.Sequence(
+    #process.pfParticleSelectionForIsoSequence +
+    #process.patPhotons +
+    process.makePatPhotons +
+    process.selectedPatPhotons  
+)
+
+
+######################################################
 process.selectedPhotons = cms.EDFilter("PATPhotonSelector",
-                                        src = cms.InputTag("gedPhotons"),
+                                        src = cms.InputTag("selectedPatPhotons"),
                                         cut = cms.string("pt > 8 && chargedHadronIso()/pt < 0.3"),
                                         )
 
 
-process.DiMuonPairs = cms.EDProducer("CandViewShallowCloneCombiner",
+
+#process.DiMuonPairs = cms.EDProducer("CandViewShallowCloneCombiner",
     #cut = cms.string('60 < mass < 140 && abs(daughter(0).vz - daughter(1).vz) < 4'),
+#    cut = cms.string('60 < mass && abs(daughter(0).vz - daughter(1).vz) < 4'),
+#    decay = cms.string('tagMuons@+ probeMuons@-')
+#)
+####################Three bodies#####################################
+process.tpPairs = cms.EDProducer("CandViewShallowCloneCombiner",
     cut = cms.string('60 < mass && abs(daughter(0).vz - daughter(1).vz) < 4'),
-    decay = cms.string('tagMuons@+ probeMuons@-')
+    decay = cms.string('tagMuons@+ probeMuons@- selectedPhotons')
 )
 
-process.tpPairs = cms.EDProducer("CandViewShallowCloneCombiner",
-    cut = cms.string('60 < mass < 140'),# It needs more investigation
- #   cut = cms.string('60 < mass && abs(daughter(0).vz - daughter(1).vz) < 4'),
-    decay = cms.string('DiMuonPairs selectedPhoton')
-)
+
+################## two bodies###############################
+#process.tpPairs = cms.EDProducer("CandViewShallowCloneCombiner",
+    #cut = cms.string('60 < mass < 140 && abs(daughter(0).vz - daughter(1).vz) < 4'),
+#    cut = cms.string('60 < mass && abs(daughter(0).vz - daughter(1).vz) < 4'),
+#    decay = cms.string('tagMuons@+ probeMuons@-')
+#)
+
+
 
 process.onePair = cms.EDFilter("CandViewCountFilter", src = cms.InputTag("tpPairs"), minNumber = cms.uint32(1))
 
@@ -314,6 +348,7 @@ process.tpTree = cms.EDAnalyzer("TagProbeFitTreeProducer",
     pairVariables = cms.PSet(
         nJets30 = cms.InputTag("njets30Module"),
         dz      = cms.string("daughter(0).vz - daughter(1).vz"),
+        #dz      = cms.string("(daughter(0).vz - daughter(1).vz) - selectedPhotons.vz"),
         pt      = cms.string("pt"), 
         rapidity = cms.string("rapidity"),
         deltaR   = cms.string("deltaR(daughter(0).eta, daughter(0).phi, daughter(1).eta, daughter(1).phi)"), 
@@ -368,8 +403,9 @@ process.tnpSimpleSequence = cms.Sequence(
     process.tagMuons +
     process.oneTag     +
     process.probeMuons +
+    process.photonSeq +
     process.selectedPhotons +
-    process.DiMuonPairs +   
+    #process.DiMuonPairs +   
     process.tpPairs    +
     process.onePair    +
     process.nverticesModule +
